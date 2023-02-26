@@ -1,13 +1,20 @@
 
+import {Route, Routes} from "react-router-dom"
+import Home from "./pages/Home";
+import Layout from "./pages/Layout";
+import Login from "./pages/Login";
 
 function App() {
-
-
   return (
-    <div className="bg-blue-500 h-full">
-      <h1 className="text-red-500 font-sm">Hello world</h1>
-    </div>
-  )
+    <Routes>
+
+      <Route path="/" element={<Layout />} >
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Route>
+
+    </Routes>
+  );
 }
 
-export default App
+export default App;
