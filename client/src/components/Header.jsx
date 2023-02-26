@@ -1,27 +1,17 @@
-import React from "react";
+import {useState} from "react";
 import { Link } from "react-router-dom";
+import Logo from "../assets/staybnb.svg"
 
-const Header = () => {
+const Header = ({active, setActive}) => {
+  
+
   return (
     <div className="w-full flex justify-between p-4 border-b border-slate-100">
-      <div className="flex justify-center items-center space-x-0">
-        <div className="rotate-[-90deg]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
-            />
-          </svg>
+      <div className="flex justify-center items-center space-x-1">
+        <div className="w-6 h-6">
+          <img src={Logo} alt="" />
         </div>
-        <h1 className="text-xl font-semibold">Airlmb</h1>
+        <h1 className="text-xl font-semibold">StayBnb</h1>
       </div>
 
       <div className="flex border font-semibold border-slate-200 px-4 py-2 items-center justify-between space-x-3 rounded-full">
@@ -31,7 +21,10 @@ const Header = () => {
         <div className="border h-full"></div>
         <div className="text-slate-400 cursor-pointer">Add Guests</div>
         <div className="border h-full"></div>
-        <button className=" bg-primary p-2 text-white rounded-full box-border rotate-90">
+        <button 
+        className=" bg-primary p-2 text-white rounded-full box-border rotate-90"
+        >
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="#e63946"
@@ -63,7 +56,10 @@ const Header = () => {
             />
           </svg>
         </div>
-        <Link to="/login" className="cursor-pointer">
+        <Link
+        className="cursor-pointer"
+        onClick={()=> setActive(!active)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

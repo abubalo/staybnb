@@ -2,7 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-input[type="text"], input[type="email"]{
+
+body{
+    font-family: "poppins", san-serif;
+    font-weight: 300;
+}
+input[type="text"], input[type="email"], input[type="password"]{
     @apply w-full block border p-2 rounded-lg outline-none border-slate-200 focus:border-green-500;
 }
 
