@@ -2,19 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body{
-    font-family: "poppins", san-serif;
-    font-weight: 300;
+body {
+  font-family: "poppins", san-serif;
+  font-weight: 300;
 }
-input[type="text"], input[type="email"], input[type="password"]{
-    @apply w-full block border p-2 rounded-lg outline-none border-slate-200 focus:border-green-500;
-}
-
-button{
-    @apply bg-gray-300;
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+  @apply w-full block border p-2 rounded-lg outline-none border-slate-200 focus:border-green-500;
 }
 
-button.primary{
-    @apply w-full bg-primary px-8 py-3 rounded-lg space-x-0 text-white hover:bg-primaryLight transition-colors;
+button {
+  @apply bg-gray-300;
+}
+
+button.primary {
+  @apply w-full bg-primary px-8 py-3 rounded-lg space-x-0 text-white hover:bg-primaryLight transition-colors;
+}
+
+:hover {
+  @apply transition-all duration-300;
 }

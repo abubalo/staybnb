@@ -29,10 +29,10 @@ const Register = () => {
     }),
 
     onSubmit: async (values) => {
-      try{
+      try {
         await axios.post("/register", values);
-      }catch(err){
-        alert("Registration error")
+      } catch (err) {
+        alert("Registration error");
       }
     },
   });

@@ -1,18 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    // "./src/*.jsx",
-    "./src/**/*.{js,jsx}",
-  ],
+  content: ["./src/**/*.{js,jsx}"],
   theme: {
     extend: {
       colors: {
-        primary: "#e63946",
-        primaryLight: "#40916c",
+        primary: "#FF385C",
+        primaryLight: "#FF1899",
         secondary: "#ee9b00",
         secondaryLight: "#ee9b50",
       },
-      height:{
+      height: {
         "10v": "10vh",
         "20v": "20vh",
         "30v": "30vh",
@@ -23,7 +20,7 @@ module.exports = {
         "80v": "80vh",
         "90v": "90vh",
         "100v": "100vh",
-      }
+      },
     },
   },
   plugins: [],

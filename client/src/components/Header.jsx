@@ -1,30 +1,43 @@
-import {useState} from "react";
+import { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import Logo from "../assets/staybnb.svg"
+import { UserContext } from "../UserContext";
+import Logo from "../assets/staybnb.svg";
+import { useEffect } from "react";
 
-const Header = ({active, setActive}) => {
-  
+const Header = ({ active, setActive }) => {
+  const { user } = useContext(UserContext);
+  const activeRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (activeRef.current && !activeRef.current.contains(e.target)) {
+        setActive(false)
+      }
+    };
+
+    window.addEventListener("click", handleClickOutside)
+    return () =>{
+      window.removeEventListener("click", handleClickOutside)
+    }
+  }, [setActive, activeRef]);
 
   return (
     <div className="w-full flex justify-between p-4 border-b border-slate-100">
-      <div className="flex justify-center items-center space-x-1">
-        <div className="w-6 h-6">
+      <Link to={"/"} className="flex justify-center items-center space-x-1">
+        <span  className="w-6 h-6">
           <img src={Logo} alt="" />
-        </div>
-        <h1 className="text-xl font-semibold">StayBnb</h1>
-      </div>
+        </span>
+        <h1 className="text-xl font-semibold text-primary">staybnb</h1>
+      </Link>
 
-      <div className="flex border font-semibold border-slate-200 px-4 py-2 items-center justify-between space-x-3 rounded-full">
-        <div className="cursor-pointer">Anywhere</div>
+      <div className="flex border  border-slate-200 px-4 py-2 items-center justify-between space-x-3 rounded-full">
+        <div className="cursor-pointer text-sm font-medium">Anywhere</div>
+        <div className="border h-full text-sm font-medium"></div>
+        <div className="cursor-pointer text-sm font-medium">Any week</div>
         <div className="border h-full"></div>
-        <div className="cursor-pointer">Any week</div>
+        <div className="text-slate-400 cursor-pointer text-sm font-medium">Add Guests</div>
         <div className="border h-full"></div>
-        <div className="text-slate-400 cursor-pointer">Add Guests</div>
-        <div className="border h-full"></div>
-        <button 
-        className=" bg-primary p-2 text-white rounded-full box-border rotate-90"
-        >
-
+        <button className=" bg-primary p-2 text-white rounded-full box-border rotate-90">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="#e63946"
@@ -41,7 +54,11 @@ const Header = ({active, setActive}) => {
           </svg>
         </button>
       </div>
-      <div className="flex justify-center items-center border border-slate-300 px-4 py-1 space-x-3 rounded-full">
+      <div
+        ref={activeRef}
+        className="flex justify-center items-center border border-slate-300 px-4 py-1 space-x-3 rounded-full cursor-pointer"
+        onClick={() => setActive(!active)}
+      >
         <div className="cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -56,10 +73,7 @@ const Header = ({active, setActive}) => {
             />
           </svg>
         </div>
-        <Link
-        className="cursor-pointer"
-        onClick={()=> setActive(!active)}
-        >
+        <div className="cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -72,7 +86,8 @@ const Header = ({active, setActive}) => {
               clipRule="evenodd"
             />
           </svg>
-        </Link>
+        </div>
+        {user && <div className="font-semibold">{user.firstName}</div>}
       </div>
     </div>
   );
