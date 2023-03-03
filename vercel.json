@@ -1,0 +1,17 @@
+{
+    "builds": [
+      {
+        "src": "client",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "api",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "docs",
+        "use": "@vitejs/vercel-plugin"
+      }
+    ]
+  }
+  
