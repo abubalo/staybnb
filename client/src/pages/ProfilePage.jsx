@@ -35,7 +35,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <div>
+    <div className="z-10">
       <AccountNav />
 
       {subpage === "profile" && (
