@@ -32,10 +32,11 @@ const Register = () => {
       try {
         await axios.post("/register", values);
       } catch (err) {
-        alert("Registration error");
+        alert("Registration error", err);
       }
     },
   });
+
   console.log(formik.errors);
   return (
     <div className="flex h-80v  justify-center items-center">

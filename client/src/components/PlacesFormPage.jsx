@@ -7,9 +7,9 @@ import axios from "axios";
 import AccountNav from "./AccountNav";
 
 export default function PlacesFormPage() {
+  const { id } = useParams();
   
-  const {id} = useParams()
-  console.log(id)
+
   const [title, setTitle] = useState("");
   const [address, setAddress] = useState("");
   const [addedPhotos, setAddedPhotos] = useState([]);
@@ -17,15 +17,16 @@ export default function PlacesFormPage() {
   const [description, setDescription] = useState("");
   const [perks, onChangePerks] = useState([]);
   const [extraInfo, setExtraInfo] = useState("");
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckout] = useState('');
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckout] = useState("");
   const [maxGuests, setMaxGuests] = useState(1);
-  const [redirect, setRedirect] = useState(false)
+  const [price, setPrice] = useState(0);
+  const [redirect, setRedirect] = useState(false);
 
-  async function addNewplaces(e) {
+  async function savePlace(e) {
     e.preventDefault();
 
-    const newData = {
+    const placeData = {
       title,
       address,
       addedPhotos,
@@ -35,49 +36,66 @@ export default function PlacesFormPage() {
       checkIn,
       checkOut,
       maxGuests,
+      price,
     };
 
-    await axios.post("/places", newData);
-    setRedirect(true);
-  }
-
-  if(redirect){
-    return <Navigate to={"/account/places"} />
-  }
-
-  useEffect(()=>{
-    if(!id){
-      return;
-    }else{
-      axios.get("/places/"+id)
+    if (id) {
+      // Update
+      await axios.put("/places", { id, ...placeData });
+      setRedirect(true);
+    } else {
+      // Create new place
+      await axios.post("/places", placeData);
+      setRedirect(true);
     }
-  }, [id])
+  }
+
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    } else {
+      axios.get("/places/" + id).then((response) => {
+        const { data } = response;
+        setTitle(data?.title);
+        setAddress(data?.address);
+        setDescription(data?.description);
+        setAddedPhotos(data?.photos);
+        onChangePerks(data?.perks);
+        setExtraInfo(data?.extraInfo);
+        setCheckIn(data?.checkIn);
+        setCheckout(data?.checkOut);
+        setMaxGuests(data?.maxGuests);
+        setPrice(data?.price);
+      });
+    }
+  }, [id]);
+
+  if (redirect) {
+    return <Navigate to={"/account/places"} />;
+  }
+
+  
   return (
     <>
       <AccountNav />
       <div className="container mx-auto my-5">
-        <form onSubmit={addNewplaces} className="flex flex-col space-y-4">
+        <form onSubmit={savePlace} className="flex flex-col space-y-4">
           <InputField
             title="Title"
             desc="Add Title of this place"
             value={title}
             setValue={setTitle}
-            placeholder="testing ..."
+            placeholder="Downtown, Rivers, Nigeria"
           />
           <InputField
             title="Address"
             desc="Add address of this place"
             value={address}
             setValue={setAddress}
-            placeholder="testing 2..."
+            placeholder="Appart from quiteness and tranquility, beautiful senery awaits you at Downtown. This place has wifi, top bacony and fire camp. All you could hope for."
           />
 
-          <PhotoUploader
-            addedPhotos={addedPhotos}
-            setAddedPhotos={setAddedPhotos}
-            photoLink={photoLink}
-            setPhotoLink={setPhotoLink}
-          />
           <InputField
             title="Description"
             desc="Add clear discrition about this place"
@@ -85,6 +103,13 @@ export default function PlacesFormPage() {
             value={description}
             setValue={setDescription}
             textArea={true}
+          />
+
+          <PhotoUploader
+            addedPhotos={addedPhotos}
+            setAddedPhotos={setAddedPhotos}
+            photoLink={photoLink}
+            setPhotoLink={setPhotoLink}
           />
 
           <Perks selected={perks} onChange={onChangePerks} />
@@ -98,7 +123,7 @@ export default function PlacesFormPage() {
                 house rules, special needs, etc
               </p>
               <textarea
-                className="w-full border  h-30 resize-none rounded-lg p-2"
+                className="w-full border  h-[150px] resize-none rounded-lg p-2"
                 placeholder="Eg. We asked you be respective to neigbours and keep the kempt"
                 value={extraInfo}
                 onChange={(e) => setExtraInfo(e.target.value)}
@@ -120,8 +145,8 @@ export default function PlacesFormPage() {
                   Check in time
                 </h3>
                 <input
-                  type="number"
-                  value={checkIn}
+                  type="date"
+                  value={checkIn || ""}
                   onChange={(e) => setCheckIn(e.target.value)}
                   placeholder="18"
                 />
@@ -131,8 +156,8 @@ export default function PlacesFormPage() {
                   Check out time
                 </h3>
                 <input
-                  type="number"
-                  value={checkOut}
+                  type="date"
+                  value={checkOut || ""}
                   onChange={(e) => setCheckout(e.target.value)}
                   placeholder="22"
                 />
@@ -144,14 +169,25 @@ export default function PlacesFormPage() {
                 <input
                   type="number"
                   placeholder="Eg. 13 guest"
-                  value={maxGuests}
-                  onChange={(e) => setMaxGuests(e.target.valueAsNumber)}
+                  value={maxGuests || ""}
+                  onChange={(e) => setMaxGuests(e.target.value)}
+                />
+              </div>
+              <div>
+                <h3 className="font-medium text-md text-gray-700">Price</h3>
+                <input
+                  type="number"
+                  placeholder="Eg. 13 guest"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
             </div>
           </div>
           <div>
-            <button className="primary font-medium">Save</button>
+            <button className="primary font-medium p-4 active:scale-90 transition-all duration-300">
+              Save
+            </button>
           </div>
         </form>
       </div>

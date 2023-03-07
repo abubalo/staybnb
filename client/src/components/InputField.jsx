@@ -4,12 +4,12 @@ function InputField({ title, desc, value, setValue, placeholder, textArea }) {
       <h1 className="text-xl font-medium text-slate-800">{title}</h1>
       <p className="text-sm text-gray-500">{desc}</p>
       {textArea ? (
-        <textarea className="w-full border  h-30 resize-none rounded-lg p-2" value={value} onChange={e => setValue(e.target.value)}></textarea>
+        <textarea className="w-full border  h-[150x] resize-none rounded-lg p-2" value={value} onChange={e => setValue(e.target.value)}></textarea>
       ) : (
         <input
           type="text"
           placeholder={placeholder}
-          value={value}
+          value={value ||""}
           onChange={(e) => setValue(e.target.value)}
         />
       )}

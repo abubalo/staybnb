@@ -9,7 +9,7 @@ body {
 input[type="text"],
 input[type="email"],
 input[type="password"],
-input[type="number"] {
+input[type="number"], textarea {
   @apply w-full block border p-2 rounded-lg outline-none border-slate-200 focus:border-green-500;
 }
 

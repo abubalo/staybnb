@@ -6,10 +6,12 @@ import axios from "axios";
 import { UserContext } from "../UserContext";
 
 const Login = () => {
-  const { setUser } = useContext(UserContext);
+  const { setUser, user } = useContext(UserContext);
+  
   const [visible, setVisible] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
+  
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,12 +28,14 @@ const Login = () => {
         const { data } = await axios.post("/login", values);
         setUser(data);
         setRedirect(true);
-      } catch (err) {
-        alert("Login failed");
+      } catch (error) {
+        alert("Login failed", error);
+        console.log(err)
       }
     },
   });
-  // console.log(formik.errors);
+
+  
   if (redirect) {
     return <Navigate to="/account" />;
   }

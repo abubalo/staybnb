@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { createContext, useState } from "react";
+
+import { useEffect, createContext, useState } from "react";
 
 export const UserContext = createContext({});
 
@@ -15,7 +15,7 @@ export function UserContextProvider({ children }) {
         setUser(userData);
         setReady(true);
   
-      }).catch(error => console.log(error));
+      })
     }
   }, []);
 

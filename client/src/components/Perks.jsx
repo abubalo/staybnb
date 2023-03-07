@@ -3,10 +3,10 @@ import React from "react";
 const Perks = ({ selected, onChange }) => {
   function selectedPerks(e) {
     const { checked, name } = e.target;
-    if(checked){
-      onChange([...selected, name])
-    }else{
-      onChange([...selected.filter(selectedName => selectedName !== name)])
+    if (checked) {
+      onChange([...selected, name]);
+    } else {
+      onChange([...selected.filter((selectedName) => selectedName !== name)]);
     }
   }
 
@@ -25,6 +25,7 @@ const Perks = ({ selected, onChange }) => {
             type="checkbox"
             id="wifi"
             name="wifi"
+            checked={selected.includes("wifi")}
             onChange={selectedPerks}
           />
           <svg
@@ -48,7 +49,13 @@ const Perks = ({ selected, onChange }) => {
           htmlFor="parking"
           className="border p-4 flex rounded-lg text-gray-700 gap-2 itmes-center cursor-pointer"
         >
-          <input type="checkbox" id="parking" name="parking"  onChange={selectedPerks}/>
+          <input
+            type="checkbox"
+            id="parking"
+            name="parking"
+            checked={selected.includes("parking")}
+            onChange={selectedPerks}
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -70,7 +77,14 @@ const Perks = ({ selected, onChange }) => {
           htmlFor="tv"
           className="border p-4 flex rounded-lg text-gray-700 gap-2 itmes-center cursor-pointer"
         >
-          <input type="checkbox" id="tv" name="tv" onChange={selectedPerks} />
+          <input
+            type="checkbox"
+            checked={selected.includes("tv")}
+            id="tv"
+            name="tv"
+            onChange={selectedPerks}
+          />
+
           <span>Tv</span>
         </label>
 
@@ -78,7 +92,14 @@ const Perks = ({ selected, onChange }) => {
           htmlFor="pet"
           className="border p-4 flex rounded-lg text-gray-700 gap-2 itmes-center cursor-pointer"
         >
-          <input type="checkbox" id="pet" name="pet" onChange={selectedPerks} />
+          <input
+            type="checkbox"
+            checked={selected.includes("pet")}
+            id="pet"
+            name="pet"
+            onChange={selectedPerks}
+          />
+
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -105,6 +126,7 @@ const Perks = ({ selected, onChange }) => {
             type="checkbox"
             id="entrance"
             name="entrance"
+            checked={selected.includes("entrance")}
             onChange={selectedPerks}
           />
           <svg
@@ -132,6 +154,7 @@ const Perks = ({ selected, onChange }) => {
             type="checkbox"
             id="fireCamp"
             name="fireCamp"
+            checked={selected.includes("fireCamp")}
             onChange={selectedPerks}
           />
           <svg
