@@ -3,11 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BookingWidget from "../components/BookingWidget";
 import ShowAllPhotos from "../components/ShowAllPhotos";
+import {
+  BsPersonWorkspace,
+  BsDoorOpenFill,
+  BsCalendar2X,
+} from "react-icons/bs";
 
 const Rooms = () => {
   const { id } = useParams();
   const [roomData, setRoomData] = useState({});
   const [showAllPhotos, setShowAllPhotos] = useState(false);
+  
 
   useEffect(() => {
     if (!id) {
@@ -55,7 +61,7 @@ const Rooms = () => {
                       />
                     </svg>
 
-                    <p>4.9 . reviews</p>
+                    <p>4.9 &bull; reviews &bull; superhost</p>
                   </div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +129,7 @@ const Rooms = () => {
                       />
                     </div>
                     <div
-                      className="absolute inline-flex items-center space-x-2 p-2 bg-white bottom-2 right-2 cursor-pointer rounded-md"
+                      className="absolute inline-flex items-center space-x-2 p-2 bg-white bottom-2 right-2 border-2 border-slate-500 cursor-pointer rounded-md"
                       onClick={() => setShowAllPhotos(true)}
                     >
                       <svg
@@ -145,11 +151,66 @@ const Rooms = () => {
               </>
             )}
           </div>
-          <div className="grid grid-cols-3 gap-4 mt-8">
-            <div className="col-span-2">
-              <div className="">
+          <div className="grid grid-cols-3 gap-4 mt-4">
+            <div className="md:col-span-2">
+              <div className="flex justify-between items-center py-4 border-b">
+                <div>
+                  <h1 className="text-xl font-semibold ">
+                    Entire house hosted by [Jesicca]
+                  </h1>
+                  <p className="text-sm font-normal">
+                    4 guests &bull; 1 bedroom &bull; 1 bed &bull; 1 bathroom{" "}
+                  </p>
+                </div>
+                <div className="w-12 h-12 bg-primary outline rounded-full">
+                  <span className=""></span>
+                </div>
+              </div>
+
+              <div className="py-8 border-b">
+                <div className="flex flex-col gap-2 space-y-5 ">
+                  <span className="flex gap-2 justify-start items-start">
+                    <BsPersonWorkspace />
+                    <span className="flex flex-col">
+                      <h3 className="text-sm font-normal">
+                        Dedicated workspace
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        A private room with wifi that’s well-suited for working.
+                      </p>
+                    </span>
+                  </span>
+                  <span className="flex gap-2 justify-start items-start">
+                    <BsDoorOpenFill />
+                    <span className="flex flex-col">
+                      <h3 className="text-sm font-normal">Self check in</h3>
+                      <p className="text-sm text-gray-500">
+                        A private room with wifi that’s well-suited for working.
+                      </p>
+                    </span>
+                  </span>
+                  <span className="flex gap-2 justify-start items-start">
+                    <BsCalendar2X />
+                    <span className="flex flex-col">
+                      <h3 className="text-sm font-normal">Free cancelation</h3>
+                      <p className="text-sm text-gray-500">
+                        Free cancellation for 48 hours.
+                      </p>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div className="py-4 space-y-3 border-b">
+                <h1 className="text-2xl font-bold">
+                  <span className="text-primary">stay</span>cover
+                </h1>
+                <p className="text-sm">Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in</p>
+                <a href="#" className="underline text-sm font-normal">Learn more</a>
+              </div>
+
+              <div className="mt-4">
                 <h1 className="text-xl font-medium">Description</h1>
-                <p>{roomData.description}</p>
+                <p className="text-sm ">{roomData.description}</p>
               </div>
               <div className="w-max p-4 bg-gray-200 mt-4 space-y-1 text-sm font-normal">
                 <div>Check in: {roomData.checkIn}</div>
@@ -158,7 +219,7 @@ const Rooms = () => {
               </div>
             </div>
 
-            <BookingWidget price={roomData.price}/>
+            <BookingWidget price={roomData.price} placeId={roomData._id} />
           </div>
         </div>
       )}

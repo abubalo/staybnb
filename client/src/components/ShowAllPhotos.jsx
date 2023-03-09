@@ -2,11 +2,10 @@ import React from "react";
 
 const ShowAllPhotos = ({ roomData, setShowAllPhotos }) => {
   return (
-    <div className="fixed inset-0 bg-white min-w-full min-h-screen overflow-scroll">
+    <div className="fixed inset-0 bg-black text-white min-w-full min-h-screen overflow-scroll">
       <div className="container mx-auto">
        
-        <button
-          type="button"
+        <span
           className="fixed top-3 flex items-center mb-4 p-4 space-x-1 text-white bg-gray-500 rounded-md"
           onClick={() => setShowAllPhotos(false)}
         >
@@ -23,7 +22,7 @@ const ShowAllPhotos = ({ roomData, setShowAllPhotos }) => {
             />
           </svg>
           <p>Go back</p>
-        </button>
+        </span>
         <h1 className="w-full text-xl flex flex-items-end font-medium p-2">Photos of {roomData.title}</h1>
         <div className="grid gap-3 p-4 h-min overflow-scroll">
           {roomData.photos.map((photo) => (

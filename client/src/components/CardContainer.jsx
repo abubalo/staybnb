@@ -36,7 +36,7 @@ export default function CardContainer() {
             to={`/rooms/${item._id}`}
             key={item._id}
             target="_blank"
-            className="relative"
+            className="relative overflow-hidden"
           >
             <img
               src={`http://localhost:5000/uploads/${item.photos[0]}`}

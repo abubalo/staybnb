@@ -1,11 +1,17 @@
-import AccountNav from "../components/AccountNav";
-import AddNewPlaceButton from "../components/AddNewPlaceButton";
-import { useEffect, useState } from "react";
+import {useState, useEffect} from "react"
+import AccountNav from "../components/AccountNav"
+import AddNewPlaceButton from "../components/AddNewPlaceButton"
 import axios from "axios";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom"
 
 const PlacesPage = () => {
   const [places, setPlaces] = useState([]);
+
+  const sortByLastItemFirst = () => {
+    const sortedItems = [...places];
+    sortedItems.sort((a, b) => b._id.localeCompare(a._id));
+    setPlaces(sortedItems);
+  };
 
   useEffect(() => {
     axios.get("/places").then(({ data }) => {
@@ -14,19 +20,12 @@ const PlacesPage = () => {
   }, []);
 
   useEffect(() => {
-    const sortByLastItemFirst = () => {
-      const sortedItems = [...places];
-      sortedItems.sort((a, b) => b._id.localeCompare(a._id));
-      setPlaces(sortedItems);
-    };
-  
     window.addEventListener("load", sortByLastItemFirst);
-  
+
     return () => {
-      window.removeEventListener("load", sortByLastItemFirst());
+      window.removeEventListener("load", sortByLastItemFirst);
     };
   }, []);
-  
 
   return (
     <div>

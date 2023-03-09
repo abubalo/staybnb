@@ -8,7 +8,8 @@ import ProfilePage from "./pages/ProfilePage";
 import Register from "./pages/Register";
 import PlacesPage from "./pages/PlacesPage";
 import PlacesFormPage from "./components/PlacesFormPage";
-import BookingPage from "./pages/BookingPage";
+import BookingsPage from "./pages/BookingsPage";
+import Booking from "./pages/Booking";
 import Rooms from "./pages/Rooms";
 
 function App() {
@@ -23,10 +24,11 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/account/" element={<ProfilePage />} />
           <Route path="/account/places" element={<PlacesPage />} />
-          <Route path="/account/bookings" element={<BookingPage />} />
           <Route path="/account/places/new" element={<PlacesFormPage />} />
           <Route path="/account/places/:id" element={<PlacesFormPage />} />
           <Route path="/rooms/:id" element={<Rooms />} />
+          <Route path="/account/bookings" element={<BookingsPage />} />
+          <Route path="/account/booking/:id" element={<Booking />} />
         </Route>
       </Routes>
     </UserContextProvider>

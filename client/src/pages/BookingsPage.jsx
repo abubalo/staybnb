@@ -1,7 +1,7 @@
 import React from 'react'
 import AccountNav from '../components/AccountNav'
 
-const BookingPage = () => {
+const BookingsPage = () => {
   return (
     <div>
         <AccountNav />
@@ -10,4 +10,4 @@ const BookingPage = () => {
   )
 }
 
-export default BookingPage
+export default BookingsPage
