@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -10,12 +9,15 @@ const session = require("express-session");
 const imageDownloader = require("image-downloader");
 const User = require("./models/User.js");
 const Place = require("./models/Place.js");
+const Booking = require("./models/Booking.js");
 const multer = require("multer");
 const fs = require("fs");
 
+require("dotenv").config();
 const port = process.env.PORT;
 const jwtSecret = process.env.JWT_SECRET;
 
+// console.log(jwtSecret);
 const bcryptSalt = bcrypt.genSaltSync(10);
 
 app.use(express.json());
@@ -23,7 +25,7 @@ app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
   session({
-    secret: "my-secret",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
   })
@@ -43,6 +45,18 @@ mongoose
   })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Failed to connect to MongoDB", err));
+
+function getUserDataFromReq(req) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(req.cookies.token, jwtSecret, {}, (err, userData) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(userData);
+      }
+    });
+  });
+}
 
 app.post("/register", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
@@ -105,7 +119,7 @@ app.get("/profile", (req, res) => {
 
       const { firstName, lastName, email, _id } = await User.findById(
         userData.id
-      );
+      ).exec();
       res.json({ firstName, lastName, email, _id });
     });
   } else {
@@ -139,7 +153,7 @@ app.post("/upload", photoMiddleWare.array("photos", 100), (req, res) => {
   res.json(uploadedFiles);
 });
 
-app.post("/places", async (req, res) => {
+app.post("/place", async (req, res) => {
   const { token } = req.cookies;
   const {
     title,
@@ -173,18 +187,17 @@ app.post("/places", async (req, res) => {
   });
 });
 
-app.get("/places/:id", async (req, res)=>{
-  const {token} = req.cookies;
-  const {id} = req.params;
-  jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+app.get("/places/:id", async (req, res) => {
+  const { token } = req.cookies;
+  const { id } = req.params;
+  jwt.verify(token, jwtSecret, {}, async (err) => {
     if (err) throw err;
-    
-    res.json(await Place.findById(id))
-  })
 
-})
+    res.json(await Place.findById(id));
+  });
+});
 
-app.get("/places", (req, res) => {
+app.get("/user-places", async (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
     if (err) throw err;
@@ -193,7 +206,7 @@ app.get("/places", (req, res) => {
   });
 });
 
-app.put("/places", (req, res) => {
+app.put("/place", (req, res) => {
   const { token } = req.cookies;
 
   const {
@@ -263,16 +276,73 @@ app.delete("/place/:id", (req, res) => {
   });
 });
 
-
-app.get('/room/:id', async (req, res) => {
+app.get("/places", async (req, res) => {
+  const places = await Place.find();
+  res.json(places);
+});
+app.get("/room/:id", async (req, res) => {
   const { id } = req.params;
 
-    const place = await Place.findById(id);
+  const place = await Place.findById(id);
 
-    if (!place) {
-      return res.status(404).json({ error: 'Place not found' });
-    }
-    res.json(place);
+  if (!place) {
+    return res.status(404).json({ error: "Place not found" });
+  }
+  res.json(place);
+});
+
+app.get("/room/:id", async (req, res) => {
+  const { id } = req.params;
+  try{
+    const place = await Place.findById(id);
+  if (!place) {
+    return res.status(404).json({ error: "Place not found" });
+  }
+  res.json(place);
+}catch(error){
+  res.status(404).json({error: ""})
+}
+});
+
+app.post("/bookings", async (req, res) => {
+  try {
+    const userData = await getUserDataFromReq(req);
+    const {
+      firstName,
+      lastName,
+      checkIn,
+      checkOut,
+      contact,
+      numberOfGuests,
+      price,
+      place,
+    } = req.body;
+    const booking = await Booking.create({
+      firstName,
+      lastName,
+      checkIn,
+      checkOut,
+      contact,
+      numberOfGuests,
+      price,
+      place,
+      userId: userData.id,
+    });
+    res.json(booking);
+  } catch (error) {
+    throw error;
+  }
+});
+
+app.get("/bookings", async (req, res) => {
+  try {
+    const userData = await getUserDataFromReq(req);
+    const bookings = await Booking.find({ user: userData.id }).populate("place");
+    res.json(bookings);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
 });
 
 app.listen(port, () => {

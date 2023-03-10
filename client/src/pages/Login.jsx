@@ -30,7 +30,7 @@ const Login = () => {
         setRedirect(true);
       } catch (error) {
         alert("Login failed", error);
-        console.log(err)
+        console.log(error)
       }
     },
   });

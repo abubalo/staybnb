@@ -41,11 +41,11 @@ export default function PlacesFormPage() {
 
     if (id) {
       // Update
-      await axios.put("/places", { id, ...placeData });
+      await axios.put("/place", { id, ...placeData });
       setRedirect(true);
     } else {
       // Create new place
-      await axios.post("/places", placeData);
+      await axios.post("/place", placeData);
       setRedirect(true);
     }
   }

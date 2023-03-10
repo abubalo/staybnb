@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { differenceInCalendarDays } from "date-fns";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+import { UserContext } from "../UserContext";
+import { useEffect } from "react";
 
 const BookingWidget = ({ placeId, price }) => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState(1);
   const [redirect, setRedirect] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [contact, setContact] = useState("");
+  const {user} = useContext(UserContext);
 
   let numberOfNights = 0;
   if (checkOut && checkIn) {
@@ -17,37 +23,55 @@ const BookingWidget = ({ placeId, price }) => {
     );
   }
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [contact, setContact] = useState("");
+useEffect(()=>{
+  if(user){
+    setFirstName(user.firstName)
+    setLastName(user.lastName)
+  }
+},[user])
+
 
   async function handleBooking(e) {
     e.preventDefault();
-    if(redirect) return;
+    try {
 
-    const response = await axios.post("/bookings", {
-      placeId,
-      firstName,
-      lastName,
-      checkIn,
-      checkOut,
-      contact,
-      numberOfGuests,
-      price: price * numberOfGuests,
-    });
+      const response = await axios.post("/bookings", {
+        firstName,
+        lastName,
+        checkIn,
+        checkOut,
+        contact,
+        numberOfGuests,
+        price: price * numberOfGuests,
+        place:placeId,
+      });
 
-    const bookingId = response.data._id;
-    setRedirect(`/account/booking/${bookingId}`);
+      const bookingId = response.data._id;
+      setRedirect(`/account/booking/${bookingId}`);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-console.log(placeId,
-  firstName,
-  lastName,
-  checkIn,
-  checkOut,
-  contact,
-  numberOfGuests,
-  price * numberOfGuests)
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
+  const formattedPrice = formatter.format(price);
+
+  console.log(formattedPrice); // $12.50
+
+  console.log(
+    firstName,
+    lastName,
+    checkIn,
+    checkOut,
+    contact,
+    numberOfGuests,
+    price * numberOfGuests,
+    placeId,
+  );
 
   if (redirect) {
     return <Navigate to={redirect} />;

@@ -1,8 +1,8 @@
-import {useState, useEffect} from "react"
-import AccountNav from "../components/AccountNav"
-import AddNewPlaceButton from "../components/AddNewPlaceButton"
+import { useState, useEffect } from "react";
+import AccountNav from "../components/AccountNav";
+import AddNewPlaceButton from "../components/AddNewPlaceButton";
 import axios from "axios";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const PlacesPage = () => {
   const [places, setPlaces] = useState([]);
@@ -14,7 +14,7 @@ const PlacesPage = () => {
   };
 
   useEffect(() => {
-    axios.get("/places").then(({ data }) => {
+    axios.get("/user-places").then(({ data }) => {
       setPlaces(data);
     });
   }, []);
@@ -32,7 +32,7 @@ const PlacesPage = () => {
       <AccountNav />
       <AddNewPlaceButton />
       <div className="container mx-auto">
-        {places.length > 0 &&
+        {places.length > 0 ? (
           places.map((place) => (
             <Link
               to={`/account/places/${place._id}`}
@@ -54,7 +54,12 @@ const PlacesPage = () => {
                   .join(" ")}.....`}</p>
               </div>
             </Link>
-          ))}
+          ))
+        ) : (
+          <>
+            <h1>Create new Place</h1>
+          </>
+        )}
       </div>
     </div>
   );

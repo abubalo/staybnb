@@ -10,6 +10,7 @@ import {
 } from "react-icons/bs";
 
 const Rooms = () => {
+  
   const { id } = useParams();
   const [roomData, setRoomData] = useState({});
   const [showAllPhotos, setShowAllPhotos] = useState(false);

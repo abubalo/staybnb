@@ -5,6 +5,7 @@ import PlacesPage from "./PlacesPage";
 import ProfilePageInfo from "../components/ProfilePageInfo";
 import { UserContext } from "../UserContext";
 import AccountNav from "../components/AccountNav";
+import Loader from "../components/Loader";
 
 const ProfilePage = () => {
   const { ready, user, setUser } = useContext(UserContext);
@@ -17,7 +18,7 @@ const ProfilePage = () => {
   }
 
   if (!ready) {
-    return "Loading...";
+    return <Loader />
   }
 
   if (ready && !user) {
@@ -35,9 +36,8 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="z-10">
+    <div className="">
       <AccountNav />
-
       {subpage === "profile" && (
         <ProfilePageInfo
           logout={logout}
