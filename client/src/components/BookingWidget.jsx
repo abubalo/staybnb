@@ -60,7 +60,7 @@ useEffect(()=>{
 
   const formattedPrice = formatter.format(price);
 
-  console.log(formattedPrice); // $12.50
+  
 
   console.log(
     firstName,

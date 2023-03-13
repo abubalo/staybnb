@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AccountNav from "../components/AccountNav";
-import {format} from "date-fns"
+import {format, differenceInCalendarDays} from "date-fns"
 
 const BookingssPage = () => {
   const [bookings, setBookings] = useState([]);
@@ -13,7 +13,6 @@ const BookingssPage = () => {
     });
   }, []);
 
-  console.log(bookings);
 
   return (
     <div>
@@ -28,7 +27,10 @@ const BookingssPage = () => {
                 </div>
                 <div className="flex flex-col space-y-2">
                   <h1 className="text-md font-medium">{booking.place.title}</h1>
-                  <p>{booking.place.description.split(" ").slice(0, 60).join(" ")}</p>
+                <div>
+                  <p>Number of night: differenceInCalendarDays(new Date(booking.checkOut), new Date(booking.checkIn))</p>
+                </div>
+                  {/* <p>{booking.place.description.split(" ").slice(0, 60).join(" ")}</p> */}
                   <p>{format(new Date(booking.checkIn), "dd-mm-yyy")} &bull; {format(new Date (booking.checkIn), "dd-mm-yyy")}</p>
                 </div>
               </div>

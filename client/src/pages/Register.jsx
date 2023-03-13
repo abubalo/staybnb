@@ -37,7 +37,7 @@ const Register = () => {
     },
   });
 
-  console.log(formik.errors);
+
   return (
     <div className="flex h-80v  justify-center items-center">
       <form

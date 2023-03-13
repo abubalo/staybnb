@@ -6,7 +6,7 @@ import axios from "axios";
 import { UserContext } from "../UserContext";
 
 const Login = () => {
-  const { setUser, user } = useContext(UserContext);
+  const { setUser} = useContext(UserContext);
   
   const [visible, setVisible] = useState(false);
   const [redirect, setRedirect] = useState(false);

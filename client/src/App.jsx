@@ -8,9 +8,10 @@ import ProfilePage from "./pages/ProfilePage";
 import Register from "./pages/Register";
 import PlacesPage from "./pages/PlacesPage";
 import PlacesFormPage from "./components/PlacesFormPage";
+import Rooms from "./pages/Rooms";
 import BookingsPage from "./pages/BookingsPage";
 import Booking from "./pages/Booking";
-import Rooms from "./pages/Rooms";
+
 
 function App() {
   axios.defaults.baseURL = "http://localhost:5000";
