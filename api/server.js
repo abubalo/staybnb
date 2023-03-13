@@ -17,7 +17,7 @@ require("dotenv").config();
 const port = process.env.PORT;
 const jwtSecret = process.env.JWT_SECRET;
 
-// console.log(jwtSecret);
+
 const bcryptSalt = bcrypt.genSaltSync(10);
 
 app.use(express.json());
@@ -293,15 +293,15 @@ app.get("/room/:id", async (req, res) => {
 
 app.get("/room/:id", async (req, res) => {
   const { id } = req.params;
-  try{
+  try {
     const place = await Place.findById(id);
-  if (!place) {
-    return res.status(404).json({ error: "Place not found" });
+    if (!place) {
+      return res.status(404).json({ error: "Place not found" });
+    }
+    res.json(place);
+  } catch (error) {
+    res.status(404).json({ error: "" });
   }
-  res.json(place);
-}catch(error){
-  res.status(404).json({error: ""})
-}
 });
 
 app.post("/bookings", async (req, res) => {
@@ -337,7 +337,9 @@ app.post("/bookings", async (req, res) => {
 app.get("/bookings", async (req, res) => {
   try {
     const userData = await getUserDataFromReq(req);
-    const bookings = await Booking.find({ user: userData.id }).populate("place");
+    const bookings = await Booking.find({ user: userData.id }).populate(
+      "place"
+    );
     res.json(bookings);
   } catch (error) {
     console.error(error);
