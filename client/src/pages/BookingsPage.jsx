@@ -23,7 +23,7 @@ const BookingssPage = () => {
             bookings.map((booking) => (
               <div className="container mx-auto flex gap-4 my-4 bg-gray-200 rounded-md overflow-hidden" key={bookings._id}>
                 <div className="w-64 shrink-0">
-                  <img src={`http://localhost:5000/uploads/${booking.place.photos[0]}`} alt="" className="aspect-square" />
+                  <img src={`http://localhost:5000/uploads/${bookings.place.photos[0]}`} alt="" className="aspect-square" />
                 </div>
                 <div className="flex flex-col space-y-2">
                   <h1 className="text-md font-medium">{booking.place.title}</h1>

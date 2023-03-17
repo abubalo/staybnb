@@ -10,7 +10,7 @@ import PlacesPage from "./pages/PlacesPage";
 import PlacesFormPage from "./components/PlacesFormPage";
 import Rooms from "./pages/Rooms";
 import BookingsPage from "./pages/BookingsPage";
-import Booking from "./pages/Booking";
+import Booking from "./pages/Booking"
 
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
           <Route path="/account/places/:id" element={<PlacesFormPage />} />
           <Route path="/rooms/:id" element={<Rooms />} />
           <Route path="/account/bookings" element={<BookingsPage />} />
-          <Route path="/account/booking/:id" element={<Booking />} />
+          <Route path="/account/booking:id" element={<Booking />} />
         </Route>
       </Routes>
     </UserContextProvider>
