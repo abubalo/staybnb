@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function Booking(){
+export default function Booking(){
   return (
     <div>Booking</div>
   )
