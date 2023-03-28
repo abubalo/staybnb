@@ -2,7 +2,7 @@
 
 StayBnb is a is colne version Airbrb, a popular online marketplace for arranging lodging, primarily homestays, or tourism experiences. It is developed using React, Node.js, MongoDB and Tailwind CSS.
 
-Check out the live demo at [https://staybnb1.vercel.app/](https://staybnb1.vercel.app/)
+Check out the live demo at [staybnb](https://staybnb1.vercel.app/)
 
 ## Installation
 
