@@ -7,5 +7,5 @@
       "destination": "/api/index.js"
     }
   ],
-  "outputDirectory": "/client/build"
+  "outputDirectory": "/build"
 }
